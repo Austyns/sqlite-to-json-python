@@ -1,3 +1,4 @@
+# Setup
 To setup, colone this repo and run  the import_all.py file after supplying the right path to the sqlite file 
 
 # sqlite-to-json-python
