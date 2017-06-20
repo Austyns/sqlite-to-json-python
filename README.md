@@ -21,7 +21,7 @@ cursor = connection.cursor()
 # select all the tables from the database
 cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
 tables = cursor.fetchall()
-# for each of the tables , select all the records from the table
+# for each of the tables , select all the records from the table and write to json file (table_name.json file)
 for table_name in tables:
 		# table_name = table_name[0]
 		print table_name['name']
@@ -34,7 +34,7 @@ for table_name in tables:
 		 
 		cur1.execute("SELECT * FROM "+table_name['name'])
 		 
-		# fetch all or one we'll go for all.
+		# fetch all.
 		 
 		results = cur1.fetchall()
 		 
