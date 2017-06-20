@@ -21,7 +21,7 @@ cursor = connection.cursor()
 # select all the tables from the database
 cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
 tables = cursor.fetchall()
-# for each of the bables , select all the records from the table
+# for each of the tables , select all the records from the table
 for table_name in tables:
 		# table_name = table_name[0]
 		print table_name['name']
