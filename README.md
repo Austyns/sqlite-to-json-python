@@ -1,8 +1,8 @@
 # Setup
-To setup, colone this repo and run  the import_all.py file after supplying the right path to the sqlite file 
+- To setup, colone this repo and run  the import_all.py file after supplying the right path to the sqlite file 
 
 # sqlite-to-json-python
-Convert sqlite databases to JSON files
+- Convert sqlite databases to JSON files
 
 import sqlite3
  
