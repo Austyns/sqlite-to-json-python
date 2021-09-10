@@ -5,8 +5,8 @@
 
 ```
 	...
-	# connect to the SQlite databases
-	connection = sqlite3.connect("path/to/sqlite/db")
+	# modify path to sqlite db
+	pathToSqliteDb = 'path/to/db.sqlite3'
 	...
 ```
 
