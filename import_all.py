@@ -1,5 +1,6 @@
 
 import sqlite3
+import json
  
 def dict_factory(cursor, row):
     d = {}
@@ -8,35 +9,43 @@ def dict_factory(cursor, row):
     return d
 
 # connect to the SQlite databases
-connection = sqlite3.connect("path/to/sqlite/db")
-connection.row_factory = dict_factory
- 
-cursor = connection.cursor()
+def openConnection(pathToSqliteDb):
+	connection = sqlite3.connect(pathToSqliteDb)
+	connection.row_factory = dict_factory 
+	cursor = connection.cursor()
+	return connection, cursor
 
-# select all the tables from the database
-cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-tables = cursor.fetchall()
-# for each of the bables , select all the records from the table
-for table_name in tables:
-		# table_name = table_name[0]
-		print table_name['name']
-		    
+def getAllRecordsInTable(table_name,pathToSqliteDb):
+	conn, curs = openConnection(pathToSqliteDb)
+	conn.row_factory = dict_factory
+	curs.execute("SELECT * FROM {} ".format(table_name) )
+	# fetch all or one we'll go for all.
 
-		conn = sqlite3.connect("path/to/sqlite/db")
-		conn.row_factory = dict_factory
-		 
-		cur1 = conn.cursor()
-		 
-		cur1.execute("SELECT * FROM "+table_name['name'])
-		 
-		# fetch all or one we'll go for all.
-		 
-		results = cur1.fetchall()
-		 
-		print results
+	results = curs.fetchall()
+	_json = [dict(zip([key[0] for key in curs.description], row)) for row in results]
+	return json.dumps(_json)
 
-		# generate and save JSON files with the table name for each of the database tables
-		with open(table_name['name']+'.json', 'a') as the_file:
-		    the_file.write(format(results).replace(" u'", "'").replace("'", "\""))
 
-connection.close()
+def sqliteToJson(pathToSqliteDb):
+	connection, cursor = openConnection(pathToSqliteDb)
+	# select all the tables from the database
+	cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+	tables = cursor.fetchall()
+	# for each of the tables , select all the records from the table
+	for table_name in tables:
+			# Get the records in table
+			results = getAllRecordsInTable(table_name['name'],pathToSqliteDb)
+
+			# generate and save JSON files with the table name for each of the database tables
+			with open('./results/'+table_name['name']+'.json', 'w') as the_file:
+			    the_file.write(results)
+
+	connection.close()
+
+
+
+if __name__ == '__main__':
+	# modify path to sqlite db
+	pathToSqliteDb = 'path/to/db.sqlite3'
+	sqliteToJson(pathToSqliteDb)
+
