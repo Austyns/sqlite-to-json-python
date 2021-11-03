@@ -10,8 +10,6 @@ def dict_factory(cursor, row):
     return d
 
 # connect to the SQlite databases
-
-
 def openConnection(pathToSqliteDb):
     connection = sqlite3.connect(pathToSqliteDb)
     connection.row_factory = dict_factory
@@ -25,6 +23,8 @@ def getAllRecordsInTable(table_name, pathToSqliteDb):
     curs.execute("SELECT * FROM {} ".format(table_name))
     # fetchall as result
     results = curs.fetchall()
+    # close connection
+    conn.close()
     return json.dumps(results)
 
 
@@ -41,7 +41,7 @@ def sqliteToJson(pathToSqliteDb):
         # generate and save JSON files with the table name for each of the database tables and save in results folder
         with open('./results/'+table_name['name']+'.json', 'w') as the_file:
             the_file.write(results)
-
+    # close connection
     connection.close()
 
 
