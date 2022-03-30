@@ -20,7 +20,7 @@ def openConnection(pathToSqliteDb):
 def getAllRecordsInTable(table_name, pathToSqliteDb):
     conn, curs = openConnection(pathToSqliteDb)
     conn.row_factory = dict_factory
-    curs.execute("SELECT * FROM {} ".format(table_name))
+    curs.execute("SELECT * FROM '{}' ".format(table_name))
     # fetchall as result
     results = curs.fetchall()
     # close connection
