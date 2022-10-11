@@ -1,19 +1,16 @@
 # Setup and Usage
 
 - Clone this repository
-- Enter the correct path to the sqliteDB from the import_all.py file
-
 ```
-	...
-	# modify path to sqlite db
-	pathToSqliteDb = 'path/to/db.sqlite3'
-	...
+git clone https://github.com/Austyns/sqlite-to-json-python
 ```
-
-- Then run the  import_all.py  file from your terminal or python evironment
-
+- Change directory to just cloned repository
 ```
-	$ python import_all.py
+cd sqlite-to-json-python
+```
+- Run the `import_all.py` file with correct location of db.sqlite3
+```
+python import_all.py ~/path/to/db.sqlite3
 ```
 
 You can Star the repo. if you find it useful
