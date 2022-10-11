@@ -1,6 +1,21 @@
 
 import sqlite3
 import json
+import argparse
+
+
+def get_sqldb_path():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '--path',
+        '-p',
+        type=str,
+        required=True,
+        help="path to you sqlite databse (ex: '/home/username/db.sqlite3')"
+    )
+    args = parser.parse_args()
+    path = args.path
+    return path
 
 
 def dict_factory(cursor, row):
@@ -46,6 +61,5 @@ def sqliteToJson(pathToSqliteDb):
 
 
 if __name__ == '__main__':
-    # modify path to sqlite db
-    pathToSqliteDb = 'path/to/db.sqlite3'
-    sqliteToJson(pathToSqliteDb)
+    db_path = get_sqldb_path()
+    sqliteToJson(db_path)
